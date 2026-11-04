@@ -1,8 +1,12 @@
 // Setting up our test framework
-const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
-chai.use(chaiAsPromised);
-const { expect } = chai;
+let expect;
+
+before(async () => {
+  const chai = await import("chai");
+  const { default: chaiAsPromised } = await import("chai-as-promised");
+  chai.use(chaiAsPromised);
+  expect = chai.expect;
+});
 
 // We need Pact in order to use it in our test
 const { provider } = require("../pact");

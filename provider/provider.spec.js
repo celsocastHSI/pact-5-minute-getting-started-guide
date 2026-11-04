@@ -1,7 +1,4 @@
 const { Verifier } = require("@pact-foundation/pact");
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
 const { server } = require("./provider.js");
 const { providerName, pactFile } = require("../pact.js");
 let port;

@@ -160,10 +160,14 @@ The following code will create a mock service on `localhost:1234` which will res
 
 ```js
 // Setting up our test framework
-const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
-chai.use(chaiAsPromised);
-const { expect } = chai;
+let expect;
+
+before(async () => {
+	const chai = await import("chai");
+	const { default: chaiAsPromised } = await import("chai-as-promised");
+	chai.use(chaiAsPromised);
+	expect = chai.expect;
+});
 
 // We need Pact in order to use it in our test
 const { provider } = require("../pact");
@@ -315,9 +319,6 @@ We now need to perform the "provider verification" task, which involves the foll
 <!-- provider.spec.js -->
 ```js
 const { Verifier } = require("@pact-foundation/pact");
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
 const { server } = require("./provider.js");
 const { providerName, pactFile } = require("../pact.js");
 let port;
